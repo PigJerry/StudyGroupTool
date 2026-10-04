@@ -1,0 +1,191 @@
+/* 1. 全局设置 */
+* {
+    box-sizing: border-box; /* 让内边距和边框包含在宽度内 */
+    margin: 0;
+    padding: 0;
+}
+
+/* 2. 页面整体布局 */
+body {
+    height: 100vh; /* 高度占满整个浏览器窗口 */
+    background: #eef0f4; /* 浅灰色背景 */
+    font-family: system-ui, "Microsoft YaHei", sans-serif; /* 字体 */
+}
+
+/* 3. 用 flex 布局把侧边栏和聊天区左右分开 */
+.app {
+    display: flex;
+    height: 100vh;
+}
+
+/* 4. 侧边栏样式 */
+.sidebar {
+    width: 200px; /* 固定宽度 */
+    background: #fff;
+    border-right: 1px solid #e3e6ea; /* 右侧分割线 */
+    padding: 16px;
+}
+.sidebar h3 {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+.sidebar ul {
+    list-style: none; /* 去掉列表前面的圆点 */
+}
+.sidebar li {
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #f3f5f8;
+    margin-bottom: 6px;
+}
+
+/* 5. 聊天区样式 */
+.chat {
+    flex: 1; /* 占满剩余空间 */
+    display: flex;
+    flex-direction: column; /* 内部元素竖着排列 */
+}
+.chat header {
+    padding: 16px 20px;
+    background: #fff;
+    border-bottom: 1px solid #e3e6ea;
+    font-weight: bold;
+}
+
+/* 6. 消息显示区 */
+.messages {
+    flex: 1;
+    overflow-y: auto; /* 消息多了可以上下滚动 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* 每条消息之间的间距 */
+}
+
+/* 7. 单条消息的样式 */
+.msg {
+    max-width: 70%; /* 单条消息最宽占 70% */
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+/* 别人发的消息靠左 */
+.msg .meta { font-size: 12px; color: #8a9099; }
+.msg .bubble {
+    background: #fff;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+/* 自己发的消息靠右，背景蓝色 */
+.msg.me { align-self: flex-end; align-items: flex-end; }
+.msg.me .bubble { background: #4a7dff; color: #fff; }
+
+/* 8. 底部输入框 */
+.composer {
+    display: flex;
+    gap: 10px;
+    padding: 14px 20px;
+    background: #fff;
+    border-top: 1px solid #e3e6ea;
+}
+.composer input {
+    flex: 1; /* 输入框占满剩余宽度 */
+    padding: 12px;
+    border: 1px solid #d8dbe0;
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+}
+.composer input:focus { border-color: #4a7dff; } /* 聚焦时边框变蓝 */
+.composer button {
+    padding: 0 20px;
+    border: none;
+    border-radius: 10px;
+    background: #4a7dff;
+    color: #fff;
+    cursor: pointer;
+}
+.composer button:hover { background: #3d6fe8; } /* 鼠标悬停时变深色 */
+
+/* ========== 登录遮罩层样式 ========== */
+.mask {
+    position: fixed; /* 固定定位，盖住全屏 */
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #eef0f4;
+    display: flex; /* 弹性布局，用来居中 */
+    align-items: center;
+    justify-content: center;
+    z-index: 100; /* 层级最高，盖住主界面 */
+}
+/* 登录卡片 */
+.card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    width: 320px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.08);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.card h2 {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 6px;
+}
+.card input {
+    padding: 12px;
+    border: 1px solid #d8dbe0;
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+}
+.card input:focus {
+    border-color: #4a7dff;
+}
+.card button {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #4a7dff;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.card button:hover {
+    background: #3d6fe8;
+}
+.card .tip {
+    font-size: 12px;
+    color: #9aa0a8;
+    text-align: center;
+}
+
+/* ========== 隐藏元素的通用类 ========== */
+.hidden {
+    display: none !important; /* 强制隐藏 */
+}
+
+/* ========== 在线成员列表优化 ========== */
+.sidebar h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sidebar h3 span {
+    background: #eef0f4;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #4a7dff;
+}
+/* 自己名字高亮 */
+.sidebar li.me {
+    background: #e6efff;
+    color: #2b5cd9;
+    font-weight: bold;
+}

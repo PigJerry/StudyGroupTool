@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五个臭皮匠专用网页</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- 登录遮罩层，一开始显示，登录成功后隐藏 -->
+    <div class="mask" id="mask">
+        <div class="card">
+            <h2>加入学习小组</h2>
+            <!-- 昵称输入框 -->
+            <input id="nickname" maxlength="20" placeholder="输入你的昵称" autocomplete="off">
+            <!-- 进入按钮，不写表单提交，直接用 JS 处理点击 -->
+            <button id="joinBtn">进入小组</button>
+            <div class="tip">请注意：昵称需唯一</div>
+        </div>
+    </div>
+
+    <!-- 主界面，一开始隐藏，登录后显示 -->
+    <div class="app hidden" id="app">
+        <!-- 左侧边栏 -->
+        <div class="sidebar">
+            <h3>在线成员 <span id="count">0</span></h3>
+            <ul id="users"></ul>
+        </div>
+
+        <!-- 右侧聊天区 -->
+        <div class="chat">
+            <header>学习小组 · 群聊</header>
+            <div class="messages" id="messages"></div>
+            <form class="composer" id="composer">
+                <input id="input" placeholder="说点什么…" autocomplete="off">
+                <button type="submit">发送</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 引入 Socket.IO -->
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <!-- 引入我们自己的 JS -->
+    <script src="/static/script.js"></script>
+</body>
+</html>
