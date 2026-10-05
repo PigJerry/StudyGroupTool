@@ -23,7 +23,7 @@ def get_db():
 def init_db():
     conn = get_db()
     cursor = conn.cursor()
-    # 创建 messages 表
+    
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS messages (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,6 +32,17 @@ def init_db():
             time TEXT NOT NULL
         )
     ''')
+    
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS scores (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            subject TEXT NOT NULL,
+            score INTEGER NOT NULL,
+            exam_date TEXT NOT NULL
+        )
+    ''')
+    
     conn.commit()
     conn.close()
 
@@ -115,6 +126,55 @@ def handle_send_message(data):
             'time': now_time,
             'sid': request.sid
         })
+
+# === 成绩页面路由 ===
+@app.route('/scores')
+def scores():
+    # 返回 templates 文件夹里的 scores.html
+    return render_template('scores.html')
+
+# === 成绩数据的 API ===
+@app.route('/api/scores', methods=['GET', 'POST'])
+def api_scores():
+    conn = get_db()
+    cursor = conn.cursor()
+    
+    # GET 请求：返回所有成绩数据
+    if request.method == 'GET':
+        cursor.execute('SELECT * FROM scores ORDER BY exam_date DESC, id DESC')
+        rows = cursor.fetchall()
+        conn.close()
+        # 把数据转成列表，发给前端
+        result = []
+        for row in rows:
+            result.append({
+                'id': row['id'],
+                'username': row['username'],
+                'subject': row['subject'],
+                'score': row['score'],
+                'exam_date': row['exam_date']
+            })
+        return {'data': result}
+    
+    # POST 请求：接收前端提交的成绩，存入数据库
+    elif request.method == 'POST':
+        data = request.get_json()  # 获取前端发来的 JSON 数据
+        username = data.get('username')
+        subject = data.get('subject')
+        score = data.get('score')
+        exam_date = data.get('exam_date')
+        
+        # 简单校验
+        if not username or not subject or score is None or not exam_date:
+            return {'status': 'error', 'msg': '请填写完整信息'}, 400
+        
+        cursor.execute(
+            'INSERT INTO scores (username, subject, score, exam_date) VALUES (?, ?, ?, ?)',
+            (username, subject, score, exam_date)
+        )
+        conn.commit()
+        conn.close()
+        return {'status': 'ok', 'msg': '成绩录入成功'}
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

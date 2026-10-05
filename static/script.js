@@ -5,11 +5,28 @@ document.addEventListener("DOMContentLoaded", () => {
     let socket = null; // 存放 WebSocket 连接
     let myNickname = ""; // 存放自己的昵称
 
-    // ========== 1. 登录逻辑 ==========
+        // ========== 自动登录 ==========
+
+    const savedName = localStorage.getItem('nickname');
+    
+    if (savedName) {
+        // 如果有，说明之前登录过，直接用它，跳过登录页面
+        myNickname = savedName;
+        document.getElementById("mask").classList.add("hidden");
+        document.getElementById("app").classList.remove("hidden");
+        
+        // 建立 WebSocket 连接
+        socket = io({ query: { username: savedName } });
+        bindSocketEvents();
+        
+        return;
+    }
+
+    // ========== 1. 登录逻辑（只有没存过昵称时才会执行到这里）==========
     const mask = document.getElementById("mask"); // 获取登录遮罩
     const app = document.getElementById("app"); // 获取主界面
-    const nicknameInput = document.getElementById("nickname"); // 昵称输入框
-    const joinBtn = document.getElementById("joinBtn"); // 进入按钮
+    const nicknameInput = document.getElementById("nickname");// 昵称输入框
+    const joinBtn = document.getElementById("joinBtn");// 进入按钮
 
     joinBtn.addEventListener("click", () => {
         const name = nicknameInput.value.trim(); // 去除首尾空格
@@ -19,7 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         myNickname = name; // 记住自己的昵称
-        
+        localStorage.setItem('nickname', name); // 存入本地存储，下次自动填充
+
         // 隐藏遮罩，显示主界面
         mask.classList.add("hidden");
         app.classList.remove("hidden");

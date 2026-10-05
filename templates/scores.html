@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成绩分析</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/scores.css">
+</head>
+<body>
+
+    <div class="app">
+        <!-- 左侧导航栏，沿用聊天室的样式，但内容换成功能菜单 -->
+        <div class="sidebar">
+            <h3>学习小组</h3>
+            <ul>
+                <li><a href="/">💬 群聊</a></li>
+                <li class="active"><a href="/scores">📊 成绩分析</a></li>
+                <li>📚 学习方法（即将上线）</li>
+            </ul>
+        </div>
+
+        <!-- 右侧主内容区 -->
+        <div class="chat">
+            <header>成绩录入与查询</header>
+            
+            <div class="content">
+                <!-- 成绩录入表单 -->
+                <div class="form-box">
+                    <h3>📝 录入成绩</h3>
+                    <form id="scoreForm">
+                        <div class="row">
+                            <label>姓名</label>
+                            <input type="text" id="s_username" placeholder="例如：王茂元" required>
+                        </div>
+                        <div class="row">
+                            <label>科目</label>
+                            <select id="s_subject" required>
+                                <option value="">请选择科目</option>
+                                <option value="语文">语文</option>
+                                <option value="数学">数学</option>
+                                <option value="英语">英语</option>
+                                <option value="物理">物理</option>
+                                <option value="化学">化学</option>
+                                <option value="生物">生物</option>
+                                <option value="政治">政治</option>
+                                <option value="历史">历史</option>
+                                <option value="地理">地理</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label>分数</label>
+                            <input type="number" id="s_score" min="0" max="150" placeholder="0-150" required>
+                        </div>
+                        <div class="row">
+                            <label>考试日期</label>
+                            <input type="date" id="s_date" required>
+                        </div>
+                        <button type="submit">提交成绩</button>
+                    </form>
+                </div>
+
+                <!-- 成绩展示表格 -->
+                <div class="table-box">
+                    <h3>📋 成绩列表</h3>
+                    <table id="scoreTable">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>科目</th>
+                                <th>分数</th>
+                                <th>考试日期</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 数据由 JS 动态填充 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/scores.js"></script>
+</body>
+</html>

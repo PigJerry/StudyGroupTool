@@ -1,0 +1,79 @@
+/* 主内容区 */
+.content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* 表单盒子 */
+.form-box, .table-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.form-box h3, .table-box h3 {
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+/* 表单里的每一行 */
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.row label {
+    width: 70px;
+    font-size: 14px;
+    color: #4b5563;
+}
+.row input, .row select {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #d8dbe0;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+}
+.row input:focus, .row select:focus {
+    border-color: #4a7dff;
+}
+
+/* 提交按钮 */
+.form-box button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #4a7dff;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.form-box button:hover {
+    background: #3d6fe8;
+}
+
+/* 表格样式 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #eef0f4;
+}
+th {
+    background: #f8f9fb;
+    color: #6b7280;
+    font-weight: normal;
+}
+tr:hover {
+    background: #f8f9fb;
+}
